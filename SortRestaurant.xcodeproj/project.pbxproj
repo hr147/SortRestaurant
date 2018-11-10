@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE21CCE32195F770005BF200 /* UIStoryboard+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21CCE22195F770005BF200 /* UIStoryboard+Names.swift */; };
+		BE21CCE62195F8AC005BF200 /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */; };
 		BE2D6ECA21956AD700ADECB7 /* sample iOS.json in Resources */ = {isa = PBXBuildFile; fileRef = BE2D6EC921956AD700ADECB7 /* sample iOS.json */; };
 		BE2D6ECD219577A300ADECB7 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2D6ECC219577A300ADECB7 /* AppDependency.swift */; };
 		BE2D6ECF21958ED000ADECB7 /* Restaurant.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE2D6ECE21958ED000ADECB7 /* Restaurant.storyboard */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE21CCE22195F770005BF200 /* UIStoryboard+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Names.swift"; sourceTree = "<group>"; };
+		BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
 		BE2D6EC921956AD700ADECB7 /* sample iOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sample iOS.json"; sourceTree = "<group>"; };
 		BE2D6ECC219577A300ADECB7 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
 		BE2D6ECE21958ED000ADECB7 /* Restaurant.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Restaurant.storyboard; sourceTree = "<group>"; };
@@ -60,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE21CCE42195F846005BF200 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
 		BE2D6ECB21956BE800ADECB7 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +169,7 @@
 		BECF10C921946FE2008310C4 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BE21CCE42195F846005BF200 /* Restaurant */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -178,6 +191,7 @@
 		BECF10CC2194702E008310C4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BE21CCE22195F770005BF200 /* UIStoryboard+Names.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,6 +299,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE2D6ED12195AC4700ADECB7 /* AppRouter.swift in Sources */,
+				BE21CCE32195F770005BF200 /* UIStoryboard+Names.swift in Sources */,
+				BE21CCE62195F8AC005BF200 /* RestaurantTableViewController.swift in Sources */,
 				BE2D6ECD219577A300ADECB7 /* AppDependency.swift in Sources */,
 				BECF10A521946D9A008310C4 /* AppDelegate.swift in Sources */,
 			);

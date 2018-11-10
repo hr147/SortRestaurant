@@ -14,14 +14,16 @@ protocol Router {
 
 class AppRouter: Router {
     
-   private unowned let dependency:DependencyContainer
+    private unowned let dependency:DependencyContainer
     
     init(dependency:DependencyContainer) {
         self.dependency = dependency
     }
     
     func installRoot(withWindow window: UIWindow?) {
-        
+        let controller = dependency.resturantController
+        let navigationController = UINavigationController(rootViewController: controller)
+        window?.rootViewController = navigationController
     }
 }
 
