@@ -32,6 +32,9 @@
 		BEE05DC221970F41002D2BC4 /* ReuseIdentifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC121970F41002D2BC4 /* ReuseIdentifying.swift */; };
 		BEE05DC421970F80002D2BC4 /* TableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC321970F80002D2BC4 /* TableViewCell+Extensions.swift */; };
 		BEE05DC621971023002D2BC4 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC521971023002D2BC4 /* UITableView+Extensions.swift */; };
+		BEE05DC821973384002D2BC4 /* UIWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC721973384002D2BC4 /* UIWindow+Extensions.swift */; };
+		BEE05DCA21973EE3002D2BC4 /* RestaurantFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC921973EE3002D2BC4 /* RestaurantFilterController.swift */; };
+		BEE05DCC219747C5002D2BC4 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEE05DCB219747C5002D2BC4 /* Filter.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		BEE05DC121970F41002D2BC4 /* ReuseIdentifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifying.swift; sourceTree = "<group>"; };
 		BEE05DC321970F80002D2BC4 /* TableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableViewCell+Extensions.swift"; sourceTree = "<group>"; };
 		BEE05DC521971023002D2BC4 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
+		BEE05DC721973384002D2BC4 /* UIWindow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extensions.swift"; sourceTree = "<group>"; };
+		BEE05DC921973EE3002D2BC4 /* RestaurantFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFilterController.swift; sourceTree = "<group>"; };
+		BEE05DCB219747C5002D2BC4 /* Filter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Filter.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +202,7 @@
 			children = (
 				BECF10AD21946D9B008310C4 /* LaunchScreen.storyboard */,
 				BE2D6ECE21958ED000ADECB7 /* Restaurant.storyboard */,
+				BEE05DCB219747C5002D2BC4 /* Filter.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -203,6 +210,7 @@
 		BECF10C921946FE2008310C4 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				BEE05DCD21974912002D2BC4 /* Filter */,
 				BE21CCE42195F846005BF200 /* Restaurant */,
 			);
 			path = Modules;
@@ -234,6 +242,7 @@
 				BE21CCE22195F770005BF200 /* UIStoryboard+Extensions.swift */,
 				BEE05DC321970F80002D2BC4 /* TableViewCell+Extensions.swift */,
 				BEE05DC521971023002D2BC4 /* UITableView+Extensions.swift */,
+				BEE05DC721973384002D2BC4 /* UIWindow+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -295,6 +304,14 @@
 				BEE05DBF21970E3F002D2BC4 /* RestaurantTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		BEE05DCD21974912002D2BC4 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				BEE05DC921973EE3002D2BC4 /* RestaurantFilterController.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +397,7 @@
 			files = (
 				BE2D6ECA21956AD700ADECB7 /* sample iOS.json in Resources */,
 				BECF10AF21946D9B008310C4 /* LaunchScreen.storyboard in Resources */,
+				BEE05DCC219747C5002D2BC4 /* Filter.storyboard in Resources */,
 				BECF10AC21946D9B008310C4 /* Assets.xcassets in Resources */,
 				BE2D6ECF21958ED000ADECB7 /* Restaurant.storyboard in Resources */,
 			);
@@ -411,9 +429,11 @@
 				BE21CCE32195F770005BF200 /* UIStoryboard+Extensions.swift in Sources */,
 				BEE05DB52196C322002D2BC4 /* DataResult.swift in Sources */,
 				BEE05DB82196C770002D2BC4 /* RestaurantError.swift in Sources */,
+				BEE05DC821973384002D2BC4 /* UIWindow+Extensions.swift in Sources */,
 				BEE05DC421970F80002D2BC4 /* TableViewCell+Extensions.swift in Sources */,
 				BE21CCE62195F8AC005BF200 /* RestaurantTableViewController.swift in Sources */,
 				BE2D6ECD219577A300ADECB7 /* AppDependency.swift in Sources */,
+				BEE05DCA21973EE3002D2BC4 /* RestaurantFilterController.swift in Sources */,
 				BEE05DC621971023002D2BC4 /* UITableView+Extensions.swift in Sources */,
 				BEE05DBC219701DD002D2BC4 /* AppStyle.swift in Sources */,
 				BEE05DC021970E3F002D2BC4 /* RestaurantTableViewCell.swift in Sources */,

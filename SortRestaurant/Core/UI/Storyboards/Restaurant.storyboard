@@ -111,39 +111,14 @@
                             <outlet property="delegate" destination="053-8X-PgQ" id="NKf-3E-E6i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="OZH-et-fKY">
-                        <barButtonItem key="rightBarButtonItem" image="filter" id="tOT-WO-H65">
-                            <connections>
-                                <action selector="filterTouchedUp:" destination="053-8X-PgQ" id="Cn3-nh-ikv"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OZH-et-fKY"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ib2-AD-EJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2015.2" y="-175.86206896551727"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="sK0-mp-NhB">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4ay-Up-uKx" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="t5z-uW-Q7M">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="053-8X-PgQ" kind="relationship" relationship="rootViewController" id="2Bn-ih-WTb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iVf-Js-R8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1076" y="-175.86206896551727"/>
+            <point key="canvasLocation" x="1711" y="-194"/>
         </scene>
     </scenes>
     <resources>
         <image name="favorite_mark" width="18" height="17"/>
-        <image name="filter" width="25" height="25"/>
     </resources>
 </document>

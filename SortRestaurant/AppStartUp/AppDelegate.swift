@@ -10,8 +10,6 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
     private var router:Router!
     private var appStyle:AppStyling!
     
@@ -22,10 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         router = dependency.router
         appStyle = dependency.styling
-        window = UIWindow(frame: UIScreen.main.bounds)
-        router.installRoot(withWindow: window)
+        router.installRoot()
         appStyle.applyTheme()
-        window?.makeKeyAndVisible()
         return true
     }
 }

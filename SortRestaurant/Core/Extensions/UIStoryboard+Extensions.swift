@@ -12,6 +12,7 @@ extension UIStoryboard {
 
     enum Storyboard: String {
         case restaurant
+        case filter
         
         var filename: String {
             return rawValue.capitalized

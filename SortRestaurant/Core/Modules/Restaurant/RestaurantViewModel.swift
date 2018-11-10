@@ -12,8 +12,10 @@ protocol RestaurantViewModeling: class {
     var count: Int { get }
     subscript (index:Int)-> Restaurant { get }
     func viewDidLoad()
+    func filterDidTouch()
     
     var refresh: Detectable<Void> { get }
+    var filters: Detectable<[String]> { get }
 }
 
 class RestaurantViewModel {
@@ -21,6 +23,7 @@ class RestaurantViewModel {
     private var restaurants:[Restaurant] = []
     
     let refresh: Detectable<Void> = Detectable(value: ())
+    let filters: Detectable<[String]> = Detectable(value: [])
     
     init(restaurantDataStore:RestaurantDataStore) {
         self.restaurantDataStore = restaurantDataStore
@@ -44,6 +47,14 @@ class RestaurantViewModel {
 }
 
 extension RestaurantViewModel: RestaurantViewModeling {
+    
+    func filterDidTouch() {
+        filters.value =  ["bestMatch","newest",
+                          "ratingAverage","distance",
+                          "popularity","averageProductPrice",
+                          "deliveryCosts","minCost"]
+    }
+    
     func viewDidLoad() {
         fetchRestaurants(withRestaurantName: "")
     }

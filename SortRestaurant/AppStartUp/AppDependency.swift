@@ -12,6 +12,7 @@ protocol DependencyContainer: class {
     var router: Router { get }
     var styling: AppStyling { get }
     var resturantController: RestaurantTableViewController { get }
+    func filterController(withFilters filters:[String]) -> RestaurantFilterController
 }
 
 class AppDependency: DependencyContainer {
@@ -30,6 +31,15 @@ class AppDependency: DependencyContainer {
         let storyboard:UIStoryboard = .init(storyboard: .restaurant)
         let controller:RestaurantTableViewController = storyboard.instantiateViewController()
         controller.restaurantViewModel = viewModel
+        controller.dependency = self
         return controller
     }
+    
+    func filterController(withFilters filters:[String]) -> RestaurantFilterController{
+        let storyboard:UIStoryboard = .init(storyboard: .filter)
+        let controller:RestaurantFilterController = storyboard.instantiateViewController()
+        controller.filterDataSource = filters
+        return controller
+    }
+    
 }

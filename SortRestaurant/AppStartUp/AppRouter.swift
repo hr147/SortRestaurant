@@ -9,21 +9,24 @@
 import UIKit
 
 protocol Router {
-    func installRoot(withWindow window:UIWindow?)
+    func installRoot()
 }
 
 class AppRouter: Router {
     
     private unowned let dependency:DependencyContainer
     
+    var window:UIWindow?
+    
+    
     init(dependency:DependencyContainer) {
         self.dependency = dependency
     }
     
-    func installRoot(withWindow window: UIWindow?) {
+    func installRoot() {
         let controller = dependency.resturantController
         let navigationController = UINavigationController(rootViewController: controller)
-        window?.rootViewController = navigationController
+        window = UIWindow(rootViewController: navigationController)
     }
 }
 
