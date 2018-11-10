@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var router:Router!
+    private var appStyle:AppStyling!
     
     private lazy var dependency: DependencyContainer = {
         return AppDependency()
@@ -20,8 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         router = dependency.router
+        appStyle = dependency.styling
         window = UIWindow(frame: UIScreen.main.bounds)
         router.installRoot(withWindow: window)
+        appStyle.applyTheme()
         window?.makeKeyAndVisible()
         return true
     }

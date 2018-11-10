@@ -10,6 +10,7 @@ import UIKit
 
 protocol DependencyContainer: class {
     var router: Router { get }
+    var styling: AppStyling { get }
     var resturantController: RestaurantTableViewController { get }
 }
 
@@ -18,9 +19,17 @@ class AppDependency: DependencyContainer {
         return AppRouter(dependency: self)
     }
     
+    var styling: AppStyling{
+        return AppStyle()
+    }
+    
     var resturantController: RestaurantTableViewController {
+        let dataStore = JSONRestaurantDataStore(translate: JSONTranslation())
+        let viewModel = RestaurantViewModel(restaurantDataStore: dataStore)
+        
         let storyboard:UIStoryboard = .init(storyboard: .restaurant)
         let controller:RestaurantTableViewController = storyboard.instantiateViewController()
+        controller.restaurantViewModel = viewModel
         return controller
     }
 }
