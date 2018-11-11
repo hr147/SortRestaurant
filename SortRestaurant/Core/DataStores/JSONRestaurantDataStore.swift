@@ -42,7 +42,7 @@ struct JSONRestaurantDataStore: RestaurantDataStore {
         }
         
         let filteredResturants = resturants.filter { restaurant -> Bool in
-            restaurant.name.contains(name)
+            restaurant.name.lowercased().contains(name.lowercased())
         }
         
         completion(.success(filteredResturants))

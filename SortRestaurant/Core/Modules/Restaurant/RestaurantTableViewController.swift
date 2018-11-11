@@ -24,7 +24,11 @@ class RestaurantTableViewController: UITableViewController {
     
     private func configureUI() {
         title = "Resturants"
-        navigationItem.searchController = UISearchController(searchResultsController: nil)
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "filter"), style: .plain, target: self, action: #selector(filterTouchedUp(_:)))
     }
@@ -41,11 +45,16 @@ class RestaurantTableViewController: UITableViewController {
         }
     }
     
+    private func deActiveSearch() {
+        navigationItem.searchController?.isActive = false
+    }
+    
     func showFilter(withFilters filters:[String]) {
         
         guard let filterController = dependency?.filterController(withFilters: filters) else { return }
         
-        filterController.valueDidSelect.subscribe = {[weak self] value in
+        filterController.valueDidSelect
+            .subscribe = {[weak self] value in
             self?.restaurantViewModel.filterDidSelect(atIndex: value.index)
         }
         
@@ -117,12 +126,20 @@ class RestaurantTableViewController: UITableViewController {
      */
     // MARK: - Actions
     @IBAction func favouriteTouchedUp(_ sender: UIButton) {
-        
+        deActiveSearch()
         
     }
     
     @objc func filterTouchedUp(_ sender: UIBarButtonItem) {
+        deActiveSearch()
         restaurantViewModel.filterDidTouch()
     }
     
+}
+
+extension RestaurantTableViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        restaurantViewModel.restaurantDidSearch(withName: searchBar.text ?? "")
+    }
 }

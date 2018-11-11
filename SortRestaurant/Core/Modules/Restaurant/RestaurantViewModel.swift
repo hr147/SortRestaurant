@@ -9,12 +9,14 @@
 import Foundation
 
 protocol RestaurantViewModeling: class {
+    //Inputs
     var count: Int { get }
     subscript (index:Int)-> Restaurant { get }
     func viewDidLoad()
+    func restaurantDidSearch(withName name:String)
     func filterDidTouch()
     func filterDidSelect(atIndex index:Int)
-    
+    //outputs
     var refresh: Detectable<Void> { get }
     var filters: Detectable<[String]> { get }
 }
@@ -51,6 +53,10 @@ class RestaurantViewModel {
 }
 
 extension RestaurantViewModel: RestaurantViewModeling {
+    
+    func restaurantDidSearch(withName name: String) {
+        fetchRestaurants(withRestaurantName: name)
+    }
     
     func filterDidSelect(atIndex index: Int) {
         currentSort = restaurantSorts[index]
