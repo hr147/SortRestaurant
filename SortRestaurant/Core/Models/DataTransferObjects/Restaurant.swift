@@ -6,7 +6,7 @@
 //  Copyright © 2018 Haroon Ur Rasheed. All rights reserved.
 //
 
-struct Restaurant: Decodable {
+class Restaurant: Decodable {
     
     enum Status:String,Decodable {
         case open = "open"
@@ -16,4 +16,13 @@ struct Restaurant: Decodable {
     
     let name:String
     let status:Status
+    let sort:SortType
+    var currentSortTitle:String = ""
+    var currentSortValue:String = ""
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case status
+        case sort = "sortingValues"
+    }
 }

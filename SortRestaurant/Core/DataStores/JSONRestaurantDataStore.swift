@@ -23,9 +23,15 @@ struct JSONRestaurantDataStore: RestaurantDataStore {
             print("Data is not found in \(fileName)"); return;
         }
         
-        guard let response:RestaurantResponseModel = try? translate.translateToObject(withData: jsonData) else { return }
+        do {
+            let response:RestaurantResponseModel = try translate.translateToObject(withData: jsonData)
+            resturants = response.restaurants
+        } catch  {
+            print(error)
+        }
         
-        resturants = response.restaurants
+        
+        
     }
     
     func restaurants(withName name:String, completion:ResultHandler<[Restaurant],RestaurantError>) {

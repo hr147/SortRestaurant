@@ -46,7 +46,7 @@ class RestaurantTableViewController: UITableViewController {
         guard let filterController = dependency?.filterController(withFilters: filters) else { return }
         
         filterController.valueDidSelect.subscribe = {[weak self] value in
-            
+            self?.restaurantViewModel.filterDidSelect(atIndex: value.index)
         }
         
         present(filterController, animated: true, completion: nil)

@@ -34,5 +34,7 @@ extension RestaurantTableViewCell {
     func configure(withRestaurant restaurant:Restaurant)  {
         nameLabel.text = restaurant.name
         statusLabel.text = restaurant.status.rawValue.uppercased()
+        currentSortTitleLabel.text = restaurant.currentSortTitle
+        currentSortValueLabel.text = restaurant.currentSortValue
     }
 }

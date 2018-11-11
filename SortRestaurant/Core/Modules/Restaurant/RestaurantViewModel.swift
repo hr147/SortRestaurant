@@ -13,6 +13,7 @@ protocol RestaurantViewModeling: class {
     subscript (index:Int)-> Restaurant { get }
     func viewDidLoad()
     func filterDidTouch()
+    func filterDidSelect(atIndex index:Int)
     
     var refresh: Detectable<Void> { get }
     var filters: Detectable<[String]> { get }
@@ -21,26 +22,29 @@ protocol RestaurantViewModeling: class {
 class RestaurantViewModel {
     private let restaurantDataStore:RestaurantDataStore
     private var restaurants:[Restaurant] = []
+    private let restaurantSorts:[RestaurantSort]
+    private var currentSort:RestaurantSort
     
     let refresh: Detectable<Void> = Detectable(value: ())
     let filters: Detectable<[String]> = Detectable(value: [])
     
-    init(restaurantDataStore:RestaurantDataStore) {
+    init(restaurantDataStore:RestaurantDataStore,
+         currentSort:RestaurantSort,
+         restaurantSorts:[RestaurantSort]) {
         self.restaurantDataStore = restaurantDataStore
+        self.currentSort = currentSort
+        self.restaurantSorts = restaurantSorts
     }
     
     func fetchRestaurants(withRestaurantName name:String)  {
         restaurantDataStore.restaurants(withName: name) {[unowned self] result in
-            switch result {
-            case .success(let restaurants):
-                self.processRestaurants(withRestaurants: restaurants)
-            case .failure(let error):break
-            }
+            guard case let .success(restaurants) = result else { return }
+            self.processRestaurants(withRestaurants: restaurants)
         }
     }
     
     func processRestaurants(withRestaurants restaurants:[Restaurant]) {
-        self.restaurants = restaurants
+        self.restaurants = currentSort.sorted(withRestaurants: restaurants)
         refresh.value = ()
         
     }
@@ -48,11 +52,13 @@ class RestaurantViewModel {
 
 extension RestaurantViewModel: RestaurantViewModeling {
     
+    func filterDidSelect(atIndex index: Int) {
+        currentSort = restaurantSorts[index]
+        processRestaurants(withRestaurants: restaurants)
+    }
+    
     func filterDidTouch() {
-        filters.value =  ["bestMatch","newest",
-                          "ratingAverage","distance",
-                          "popularity","averageProductPrice",
-                          "deliveryCosts","minCost"]
+        filters.value =  restaurantSorts.map({ $0.title })
     }
     
     func viewDidLoad() {
