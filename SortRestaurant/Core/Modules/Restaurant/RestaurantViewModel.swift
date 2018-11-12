@@ -52,12 +52,12 @@ class RestaurantViewModel {
     private func processRestaurants(withRestaurants restaurants:[Restaurant]) {
         
         restaurantFavouriteDataStore.favourites(withName: "") {[unowned self] result in
-            switch result{
-            case .success(let favourites):
-                self.restaurants = self.currentSort.sorted(withFavourites: favourites, withRestaurants: restaurants)
-                self.refresh.value = ()
-            case .failure(let error):break
+            var favourites:[String] = []
+            if case let .success(storedFavourites) = result {
+                favourites = storedFavourites
             }
+            self.restaurants = self.currentSort.sorted(withFavourites: favourites, withRestaurants: restaurants)
+            self.refresh.value = ()
         }
     }
     
