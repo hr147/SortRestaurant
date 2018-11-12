@@ -1,19 +1,20 @@
 //
-//  JSONRestaurantDataStore.swift
-//  SortRestaurant
+//  StubRestaurantDataStore.swift
+//  SortRestaurantTests
 //
-//  Created by Haroon Ur Rasheed on 10/11/2018.
+//  Created by Haroon Ur Rasheed on 12/11/2018.
 //  Copyright © 2018 Haroon Ur Rasheed. All rights reserved.
 //
 
-import UIKit
+import Foundation
+@testable import SortRestaurant
 
-struct JSONRestaurantDataStore: RestaurantDataStore {
-    
+struct StubRestaurantDataStore: RestaurantDataStore {
+
     private var resturants:[Restaurant] = []
     
-    init(fileName:String,translate:ObjectTranslatable) {
-        guard let path = Bundle.main.path(forResource: fileName, ofType: "json") else {
+    init(bundle:Bundle,fileName:String,translate:ObjectTranslatable) {
+        guard let path = bundle.path(forResource: fileName, ofType: "json") else {
             print("\(fileName) is not found."); return;
         }
         
@@ -45,6 +46,4 @@ struct JSONRestaurantDataStore: RestaurantDataStore {
         
         completion(.success(filteredResturants))
     }
-    
-    
 }

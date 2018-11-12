@@ -1,0 +1,55 @@
+{
+	"restaurants": [{
+		"name": "Tandoori Express",
+		"status": "closed",
+		"sortingValues": {
+			"bestMatch": 1.0,
+			"newest": 266.0,
+			"ratingAverage": 4.5,
+			"distance": 2308,
+			"popularity": 123.0,
+			"averageProductPrice": 1146,
+			"deliveryCosts": 150,
+			"minCost": 1300
+		}
+	}, {
+		"name": "Sushi One",
+		"status": "open",
+		"sortingValues": {
+			"bestMatch": 3.0,
+			"newest": 238.0,
+			"ratingAverage": 4.0,
+			"distance": 1618,
+			"popularity": 23.0,
+			"averageProductPrice": 1285,
+			"deliveryCosts": 0,
+			"minCost": 1200
+		}
+	}, {
+		"name": "Roti Shop",
+		"status": "open",
+		"sortingValues": {
+			"bestMatch": 4.0,
+			"newest": 247.0,
+			"ratingAverage": 4.5,
+			"distance": 2308,
+			"popularity": 81.0,
+			"averageProductPrice": 915,
+			"deliveryCosts": 0,
+			"minCost": 2000
+		}
+	}, {
+		"name": "Daily Sushi",
+		"status": "closed",
+		"sortingValues": {
+			"bestMatch": 9.0,
+			"newest": 221.0,
+			"ratingAverage": 4.0,
+			"distance": 1911,
+			"popularity": 6.0,
+			"averageProductPrice": 1327,
+			"deliveryCosts": 200,
+			"minCost": 1000
+		}
+	}]
+}
