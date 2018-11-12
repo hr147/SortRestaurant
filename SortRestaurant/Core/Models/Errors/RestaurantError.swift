@@ -14,4 +14,13 @@ enum RestaurantError: Error {
         case invalid
     }
     
+    enum FavouriteDataStoreFailureReason {
+        case favouriteFailed(error: Error)
+        case unFavouriteFailed(error: Error)
+        case unFavouriteSaveFailed(error: Error)
+        case favouriteFetchingFailed(error: Error)
+    }
+    
+    case favouriteDataStoreFailed(reason: FavouriteDataStoreFailureReason)
+    case invalid
 }

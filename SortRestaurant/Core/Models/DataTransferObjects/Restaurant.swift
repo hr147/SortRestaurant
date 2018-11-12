@@ -19,6 +19,7 @@ class Restaurant: Decodable {
     let sort:SortType
     var currentSortTitle:String = ""
     var currentSortValue:String = ""
+    var isFavourite = false
     
     enum CodingKeys: String, CodingKey {
         case name

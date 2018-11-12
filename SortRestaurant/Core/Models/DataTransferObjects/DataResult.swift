@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias ResultHandler<T,E:Error> = ((DataResult<T,E>)->Void)
+
 public enum DataResult<T,E:Error> {
     case success(T)
     case failure(E)

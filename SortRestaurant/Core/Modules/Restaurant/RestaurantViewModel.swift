@@ -16,6 +16,7 @@ protocol RestaurantViewModeling: class {
     func restaurantDidSearch(withName name:String)
     func filterDidTouch()
     func filterDidSelect(atIndex index:Int)
+    func favouriteStatusDidChange(atIndex index:Int)
     //outputs
     var refresh: Detectable<Void> { get }
     var filters: Detectable<[String]> { get }
@@ -23,6 +24,7 @@ protocol RestaurantViewModeling: class {
 
 class RestaurantViewModel {
     private let restaurantDataStore:RestaurantDataStore
+    private let restaurantFavouriteDataStore:FavouriteRestaurantDataStore
     private var restaurants:[Restaurant] = []
     private let restaurantSorts:[RestaurantSort]
     private var currentSort:RestaurantSort
@@ -31,28 +33,69 @@ class RestaurantViewModel {
     let filters: Detectable<[String]> = Detectable(value: [])
     
     init(restaurantDataStore:RestaurantDataStore,
+         restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
          currentSort:RestaurantSort,
          restaurantSorts:[RestaurantSort]) {
         self.restaurantDataStore = restaurantDataStore
         self.currentSort = currentSort
         self.restaurantSorts = restaurantSorts
+        self.restaurantFavouriteDataStore = restaurantFavouriteDataStore
     }
     
-    func fetchRestaurants(withRestaurantName name:String)  {
+    private func fetchRestaurants(withRestaurantName name:String)  {
         restaurantDataStore.restaurants(withName: name) {[unowned self] result in
             guard case let .success(restaurants) = result else { return }
             self.processRestaurants(withRestaurants: restaurants)
         }
     }
     
-    func processRestaurants(withRestaurants restaurants:[Restaurant]) {
-        self.restaurants = currentSort.sorted(withRestaurants: restaurants)
-        refresh.value = ()
+    private func processRestaurants(withRestaurants restaurants:[Restaurant]) {
         
+        restaurantFavouriteDataStore.favourites(withName: "") {[unowned self] result in
+            switch result{
+            case .success(let favourites):
+                self.restaurants = self.currentSort.sorted(withFavourites: favourites, withRestaurants: restaurants)
+                self.refresh.value = ()
+            case .failure(let error):break
+            }
+        }
+    }
+    
+    private func favourite(restuarant: Restaurant) {
+        restaurantFavouriteDataStore.favourite(name: restuarant.name) {[unowned self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:self.processRestaurants(withRestaurants: self.restaurants)
+                case .failure(let error):break
+                }
+            }
+        }
+    }
+    
+    private func unFavourite(restuarant: Restaurant) {
+        restaurantFavouriteDataStore.unfavourite(name: restuarant.name) {[unowned self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:self.processRestaurants(withRestaurants: self.restaurants)
+                case .failure(let error):break
+                }
+            }
+        }
     }
 }
 
 extension RestaurantViewModel: RestaurantViewModeling {
+    
+    func favouriteStatusDidChange(atIndex index: Int) {
+        let restaurant = self[index]
+        
+        if restaurant.isFavourite {
+            unFavourite(restuarant: restaurant)
+        }else{
+            favourite(restuarant: restaurant)
+        }
+        
+    }
     
     func restaurantDidSearch(withName name: String) {
         fetchRestaurants(withRestaurantName: name)

@@ -40,8 +40,11 @@ class AppDependency: DependencyContainer {
         ]
         
         let dataStore = JSONRestaurantDataStore(translate: JSONTranslation())
+        let favouriteDataStore = CoreDataFavouriteRestaurantDataStore()
+        
         let viewModel = RestaurantViewModel(
             restaurantDataStore: dataStore,
+            restaurantFavouriteDataStore: favouriteDataStore,
             currentSort: defaultSort,
             restaurantSorts: sorts)
         

@@ -17,4 +17,9 @@ extension UITableView {
         
         return cell
     }
+    
+    func indexPath(for view: UIView) -> IndexPath? {
+        let location = view.convert(CGPoint.zero, to: self)
+        return self.indexPathForRow(at: location)
+    }
 }

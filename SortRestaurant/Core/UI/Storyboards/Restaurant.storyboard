@@ -31,7 +31,7 @@
                                                 <constraint firstAttribute="width" constant="45" id="Ikn-8b-oPE"/>
                                                 <constraint firstAttribute="height" constant="45" id="Nny-0S-mnB"/>
                                             </constraints>
-                                            <state key="normal" image="favorite_mark"/>
+                                            <state key="normal" image="favorite_un_mark"/>
                                             <state key="selected" image="favorite_mark"/>
                                             <connections>
                                                 <action selector="favouriteTouchedUp:" destination="053-8X-PgQ" eventType="touchUpInside" id="wgt-5s-u2d"/>
@@ -120,5 +120,6 @@
     </scenes>
     <resources>
         <image name="favorite_mark" width="18" height="17"/>
+        <image name="favorite_un_mark" width="18" height="18"/>
     </resources>
 </document>

@@ -36,5 +36,6 @@ extension RestaurantTableViewCell {
         statusLabel.text = restaurant.status.rawValue.uppercased()
         currentSortTitleLabel.text = restaurant.currentSortTitle
         currentSortValueLabel.text = restaurant.currentSortValue
+        favouriteButton.isSelected = restaurant.isFavourite
     }
 }
