@@ -41,7 +41,7 @@ class AppDependency: DependencyContainer {
             RestaurantSort("Min Cost",MinCostSort())
         ]
         
-        let dataStore = JSONRestaurantDataStore(translate: JSONTranslation())
+        let dataStore = JSONRestaurantDataStore(fileName: "sample iOS", translate: JSONTranslation())
         let favouriteDataStore = CoreDataFavouriteRestaurantDataStore()
         let wireFrame = AlertMessageWireframe(source: controller)
         

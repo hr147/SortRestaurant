@@ -11,6 +11,7 @@ import CoreData
 class CoreDataPersistence {
     
     //MARK: - init
+    
     public var container : NSPersistentContainer
     init() {
         container = NSPersistentContainer(name: "Restaurant")
@@ -22,6 +23,7 @@ class CoreDataPersistence {
     }
     
     //MARK: - perform methods
+    
     public func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         container.performBackgroundTask(block)
     }

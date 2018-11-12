@@ -7,16 +7,7 @@
 //
 
 import UIKit
-/*
- "bestMatch": 306.0,
- "newest": 259.0,
- "ratingAverage": 3.5,
- "distance": 14201,
- "popularity": 0.0,
- "averageProductPrice": 4465,
- "deliveryCosts": 500,
- "minCost": 5000
- */
+
 struct SortType: Decodable {
     let bestMatch: Float
     let newest: Float

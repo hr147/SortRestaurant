@@ -1,0 +1,55 @@
+{
+	"restaurants": [{
+		"name": "Yvonne's Vispaleis",
+		"status": "order ahead",
+		"sortingValues": {
+			"bestMatch": 15.0,
+			"newest": 150.0,
+			"ratingAverage": 5.0,
+			"distance": 2909,
+			"popularity": 3.0,
+			"averageProductPrice": 2557,
+			"deliveryCosts": 150,
+			"minCost": 1750
+		}
+	}, {
+		"name": "De Amsterdamsche Tram",
+		"status": "open",
+		"sortingValues": {
+			"bestMatch": 304.0,
+			"newest": 131.0,
+			"ratingAverage": 0.0,
+			"distance": 2792,
+			"popularity": 0.0,
+			"averageProductPrice": 892,
+			"deliveryCosts": 0,
+			"minCost": 0
+		}
+	}, {
+		"name": "Lale Restaurant & Snackbar",
+		"status": "order ahead",
+		"sortingValues": {
+			"bestMatch": 305.0,
+			"newest": 73.0,
+			"ratingAverage": 0.0,
+			"distance": 2880,
+			"popularity": 0.0,
+			"averageProductPrice": 838,
+			"deliveryCosts": 0,
+			"minCost": 0
+		}
+	}, {
+		"name": "Lunchpakketdienst",
+		"status": "open",
+		"sortingValues": {
+			"bestMatch": 306.0,
+			"newest": 259.0,
+			"ratingAverage": 3.5,
+			"distance": 14201,
+			"popularity": 0.0,
+			"averageProductPrice": 4465,
+			"deliveryCosts": 500,
+			"minCost": 5000
+		}
+	}]
+}

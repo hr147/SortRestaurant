@@ -9,9 +9,6 @@
 import Foundation
 
 protocol ObjectTranslatable {
-    
-    //func translateToMap<T:Encodable>(withModel model:T) -> [String:Any]?
-    //func translateToData<T:Encodable>(withModel model:T) -> Data?
     func translateToObject<T:Decodable>(withData data:Data) throws -> T
 }
 
@@ -21,6 +18,4 @@ struct JSONTranslation: ObjectTranslatable {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
-    
-
 }

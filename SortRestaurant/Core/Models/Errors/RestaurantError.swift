@@ -9,10 +9,6 @@
 import UIKit
 
 enum RestaurantError: Error {
-
-    enum RestaurantDataStore {
-        case invalid
-    }
     
     enum FavouriteDataStoreFailureReason {
         case favouriteFailed(error: Error)
