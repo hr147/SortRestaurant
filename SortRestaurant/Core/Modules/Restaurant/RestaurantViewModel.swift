@@ -53,7 +53,6 @@ class RestaurantViewModel {
     }
     
     private func processRestaurants(withRestaurants restaurants:[Restaurant]) {
-        
         restaurantFavouriteDataStore.favourites(withName: "") {[unowned self] result in
             var favourites:[String] = []
             if case let .success(storedFavourites) = result {
