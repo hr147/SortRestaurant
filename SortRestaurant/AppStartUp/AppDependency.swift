@@ -26,6 +26,8 @@ class AppDependency: DependencyContainer {
     
     var resturantController: RestaurantTableViewController {
         
+        let storyboard:UIStoryboard = .init(storyboard: .restaurant)
+        let controller:RestaurantTableViewController = storyboard.instantiateViewController()
         let defaultSort = RestaurantSort("Best Match",BestMatchSort())
         
         let sorts = [
@@ -41,15 +43,15 @@ class AppDependency: DependencyContainer {
         
         let dataStore = JSONRestaurantDataStore(translate: JSONTranslation())
         let favouriteDataStore = CoreDataFavouriteRestaurantDataStore()
+        let wireFrame = AlertMessageWireframe(source: controller)
         
         let viewModel = RestaurantViewModel(
             restaurantDataStore: dataStore,
             restaurantFavouriteDataStore: favouriteDataStore,
+            messageWireFrame: wireFrame,
             currentSort: defaultSort,
             restaurantSorts: sorts)
         
-        let storyboard:UIStoryboard = .init(storyboard: .restaurant)
-        let controller:RestaurantTableViewController = storyboard.instantiateViewController()
         controller.restaurantViewModel = viewModel
         controller.dependency = self
         return controller

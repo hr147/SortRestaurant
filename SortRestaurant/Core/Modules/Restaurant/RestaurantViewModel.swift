@@ -28,18 +28,21 @@ class RestaurantViewModel {
     private var restaurants:[Restaurant] = []
     private let restaurantSorts:[RestaurantSort]
     private var currentSort:RestaurantSort
+    private let messageWireFrame:MessageWireframe
     
     let refresh: Detectable<Void> = Detectable(value: ())
     let filters: Detectable<[String]> = Detectable(value: [])
     
     init(restaurantDataStore:RestaurantDataStore,
          restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
+         messageWireFrame:MessageWireframe,
          currentSort:RestaurantSort,
          restaurantSorts:[RestaurantSort]) {
         self.restaurantDataStore = restaurantDataStore
         self.currentSort = currentSort
         self.restaurantSorts = restaurantSorts
         self.restaurantFavouriteDataStore = restaurantFavouriteDataStore
+        self.messageWireFrame = messageWireFrame
     }
     
     private func fetchRestaurants(withRestaurantName name:String)  {
@@ -66,7 +69,9 @@ class RestaurantViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success:self.processRestaurants(withRestaurants: self.restaurants)
-                case .failure(let error):break
+                case .failure(let error):
+                    print("\(error)")
+                    self.messageWireFrame.show(withMessage: "favourite failed. Please try again.")
                 }
             }
         }
@@ -77,7 +82,9 @@ class RestaurantViewModel {
             DispatchQueue.main.async {
                 switch result {
                 case .success:self.processRestaurants(withRestaurants: self.restaurants)
-                case .failure(let error):break
+                case .failure(let error):
+                    print("\(error)")
+                    self.messageWireFrame.show(withMessage: "un favourite failed. Please try again.")
                 }
             }
         }

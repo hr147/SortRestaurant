@@ -24,3 +24,7 @@ enum RestaurantError: Error {
     case favouriteDataStoreFailed(reason: FavouriteDataStoreFailureReason)
     case invalid
 }
+
+struct RestaurantAdopterError:Error {
+    let error:Error? = nil
+}
