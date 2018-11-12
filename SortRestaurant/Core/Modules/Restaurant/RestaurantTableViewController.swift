@@ -42,8 +42,8 @@ class RestaurantTableViewController: UITableViewController {
         }
         
         restaurantViewModel.filters
-            .subscribe = { [weak self] filters in
-                self?.showFilter(withFilters: filters)
+            .subscribe = {[weak self] filterTuple in
+                self?.showFilter(withFilters: filterTuple.names, selectedIndex: filterTuple.selectedIndex)
         }
     }
     
@@ -51,9 +51,9 @@ class RestaurantTableViewController: UITableViewController {
         navigationItem.searchController?.isActive = false
     }
     
-    private func showFilter(withFilters filters:[String]) {
+    private func showFilter(withFilters filters:[String],selectedIndex:Int) {
         guard let filterController = dependency?.filterController(withFilters: filters) else { return }
-        
+        filterController.defaultSelectedRow = selectedIndex
         filterController.valueDidSelect
             .subscribe = {[weak self] value in
                 self?.restaurantViewModel.filterDidSelect(atIndex: value.index)

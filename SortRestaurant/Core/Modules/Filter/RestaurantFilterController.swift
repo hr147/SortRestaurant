@@ -13,6 +13,14 @@ final class RestaurantFilterController: UIViewController {
     @IBOutlet weak var pickerView: UIPickerView!
     var filterDataSource: [String]!
     let valueDidSelect: Detectable<(value:String,index:Int)> = .init(value: ("",0))
+    var defaultSelectedRow:Int = 0
+    let defaultComponenet:Int = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pickerView.selectRow(defaultSelectedRow, inComponent: defaultComponenet, animated: false)
+    }
+    
     //MARK:- Private Methods
     
     private func close() {
@@ -25,7 +33,7 @@ final class RestaurantFilterController: UIViewController {
     }
     
     @IBAction func selectTouchedUp(_ sender: UIBarButtonItem) {
-        let row = pickerView.selectedRow(inComponent: 0)
+        let row = pickerView.selectedRow(inComponent: defaultComponenet)
         let value = filterDataSource[row]
         valueDidSelect.value = (value,row)
         close()

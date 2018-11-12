@@ -19,7 +19,7 @@ protocol RestaurantViewModeling: class {
     func favouriteStatusDidChange(atIndex index:Int)
     //outputs
     var refresh: Detectable<Void> { get }
-    var filters: Detectable<[String]> { get }
+    var filters: Detectable<(names:[String],selectedIndex:Int)> { get }
 }
 
 class RestaurantViewModel {
@@ -31,7 +31,7 @@ class RestaurantViewModel {
     private let messageWireFrame:MessageWireframe
     
     let refresh: Detectable<Void> = Detectable(value: ())
-    let filters: Detectable<[String]> = Detectable(value: [])
+    let filters: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
     
     init(restaurantDataStore:RestaurantDataStore,
          restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
@@ -101,7 +101,6 @@ extension RestaurantViewModel: RestaurantViewModeling {
         }else{
             favourite(restuarant: restaurant)
         }
-        
     }
     
     func restaurantDidSearch(withName name: String) {
@@ -114,7 +113,9 @@ extension RestaurantViewModel: RestaurantViewModeling {
     }
     
     func filterDidTouch() {
-        filters.value =  restaurantSorts.map({ $0.title })
+        let filterNames = restaurantSorts.map({ $0.title })
+        let filterSelectedRowIndex = restaurantSorts.firstIndex(where: { $0.title == currentSort.title }) ?? 0
+        filters.value = (filterNames,filterSelectedRowIndex)
     }
     
     func viewDidLoad() {
