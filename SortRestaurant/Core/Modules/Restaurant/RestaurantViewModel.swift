@@ -9,8 +9,7 @@
 import Foundation
 
 protocol RestaurantViewModeling: class {
-    //Inputs
-    
+    /// ViewModel Input messages
     var count: Int { get }
     subscript (index:Int)-> Restaurant { get }
     func viewDidLoad()
@@ -19,26 +18,25 @@ protocol RestaurantViewModeling: class {
     func filterDidSelect(atIndex index:Int)
     func favouriteStatusDidChange(atIndex index:Int)
     
-    //outputs
-    
+    /// ViewModel Output Obserables
     var refresh: Detectable<Void> { get }
     var filterNames: Detectable<(names:[String],selectedIndex:Int)> { get }
 }
 
 final class RestaurantViewModel {
+    /// Properties for to get restuarants
     private let restaurantDataStore:RestaurantDataStore
     private let restaurantFavouriteDataStore:FavouriteRestaurantDataStore
-    private let restaurantSort = RestaurantSort()
+    
+    /// to get filtered and sorted restuarants
+    private let restaurantFilter:RestaurantFilterable
     
     private var restaurants:[Restaurant] = []
-    private let filters:[RestaurantFilterType]
-    private var activeFilter:RestaurantFilterType
     
     /// use for show alert messages
     private let messageWireFrame:MessageWireframe
     
-    //outputs
-    
+    /// ViewModel Output obserables
     let refresh: Detectable<Void> = Detectable(value: ())
     let filterNames: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
     
@@ -51,17 +49,15 @@ final class RestaurantViewModel {
     ///   - messageWireFrame: show pop up messages
     ///   - currentFilter: default filter
     ///   - filters: list of all filters
-    
     init(restaurantDataStore:RestaurantDataStore,
          restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
          messageWireFrame:MessageWireframe,
-         currentFilter:RestaurantFilterType,
-         filters:[RestaurantFilterType]) {
+         restaurantFilter:RestaurantFilterable
+         ) {
         self.restaurantDataStore = restaurantDataStore
-        self.activeFilter = currentFilter
-        self.filters = filters
         self.restaurantFavouriteDataStore = restaurantFavouriteDataStore
         self.messageWireFrame = messageWireFrame
+        self.restaurantFilter = restaurantFilter
     }
     
     private func fetchRestaurants(withRestaurantName name:String)  {
@@ -78,10 +74,7 @@ final class RestaurantViewModel {
                 favourites = storedFavourites
             }
             // load sorted restaurants based on active filter
-            self.restaurants = self.restaurantSort.sorted(
-                withFavourites: favourites,
-                withRestaurants: restaurants,
-                withFilter: self.activeFilter)
+            self.restaurants = self.restaurantFilter.sorted(favourites, restaurants)
             
             self.refresh.value = ()
         }
@@ -127,14 +120,12 @@ extension RestaurantViewModel: RestaurantViewModeling {
     }
     
     func filterDidSelect(atIndex index: Int) {
-        activeFilter = filters[index]
+        restaurantFilter.activate(for: index)
         processRestaurants(withRestaurants: restaurants)
     }
     
     func filterDidTouch() {
-        let names = filters.map({ $0.title })
-        let filterSelectedRowIndex = filters.firstIndex(where: { $0.title == activeFilter.title }) ?? 0
-        filterNames.value = (names,filterSelectedRowIndex)
+        filterNames.value = (restaurantFilter.names,restaurantFilter.indexOfActiveFilter)
     }
     
     func viewDidLoad() {

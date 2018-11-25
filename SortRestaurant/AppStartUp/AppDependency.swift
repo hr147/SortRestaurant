@@ -44,13 +44,13 @@ class AppDependency: DependencyContainer {
         let dataStore = JSONRestaurantDataStore(fileName: "sample iOS", translate: JSONTranslation())
         let favouriteDataStore = CoreDataFavouriteRestaurantDataStore()
         let wireFrame = AlertMessageWireframe(source: controller)
+        let filter = RestaurantFilter(filters: filters, activeFilter: defaultFilter)
         
         let viewModel = RestaurantViewModel(
             restaurantDataStore: dataStore,
             restaurantFavouriteDataStore: favouriteDataStore,
             messageWireFrame: wireFrame,
-            currentFilter: defaultFilter,
-            filters: filters)
+            restaurantFilter: filter)
         
         controller.restaurantViewModel = viewModel
         controller.dependency = self

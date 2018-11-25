@@ -9,27 +9,6 @@
 import UIKit
 @testable import SortRestaurant
 
-/*
- 
- "bestMatch": 0.0,
- "newest": 96.0,
- "ratingAverage": 4.5,
- "distance": 1190,
- "popularity": 17.0,
- "averageProductPrice": 1536,
- "deliveryCosts": 200,
- "minCost": 1000
- 
- NewestFilter(title: "Newest"),
- RatingAverageFilter(title: "Rating Average"),
- DistanceFilter(title: "Distance"),
- PopularityFilter(title: "Popularity"),
- AverageProductPriceFilter(title: "Average Product Price"),
- DeliveryCostsFilter(title: "Delivery Costs"),
- MinCostFilter(title: "Min Cost")
- 
- */
-
 enum JSONFileName:String {
     case sample1 = "Sample1"
     case sample2 = "Sample2"
@@ -104,13 +83,13 @@ class MockRestaurantViewModel {
             fileName:file.name,
             translate:JSONTranslation())
         
+        let filter = RestaurantFilter(filters: filters, activeFilter: defaultFilter)
+        
         return RestaurantViewModel(
             restaurantDataStore: dataStore,
             restaurantFavouriteDataStore: favouriteDataStore,
             messageWireFrame: wireFrame,
-            currentFilter: defaultFilter,
-            filters: filters)
+            restaurantFilter: filter
+        )
     }
-    
-    
 }

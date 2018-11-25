@@ -60,7 +60,7 @@
 		BEE05DCA21973EE3002D2BC4 /* RestaurantFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DC921973EE3002D2BC4 /* RestaurantFilterController.swift */; };
 		BEE05DCC219747C5002D2BC4 /* Filter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEE05DCB219747C5002D2BC4 /* Filter.storyboard */; };
 		BEE05DCF219819EE002D2BC4 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DCE219819EE002D2BC4 /* SortType.swift */; };
-		BEE05DD121981E3F002D2BC4 /* RestaurantSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DD021981E3F002D2BC4 /* RestaurantSort.swift */; };
+		BEE05DD121981E3F002D2BC4 /* RestaurantFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE05DD021981E3F002D2BC4 /* RestaurantFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,7 +131,7 @@
 		BEE05DC921973EE3002D2BC4 /* RestaurantFilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFilterController.swift; sourceTree = "<group>"; };
 		BEE05DCB219747C5002D2BC4 /* Filter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Filter.storyboard; sourceTree = "<group>"; };
 		BEE05DCE219819EE002D2BC4 /* SortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
-		BEE05DD021981E3F002D2BC4 /* RestaurantSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSort.swift; sourceTree = "<group>"; };
+		BEE05DD021981E3F002D2BC4 /* RestaurantFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,13 +160,20 @@
 			path = MockObjects;
 			sourceTree = "<group>";
 		};
+		BE06339121AA7D970002A5D3 /* BusinessLogic  */ = {
+			isa = PBXGroup;
+			children = (
+				BEE05DD021981E3F002D2BC4 /* RestaurantFilter.swift */,
+				BE06338A21A906420002A5D3 /* RestaurantFilterType.swift */,
+			);
+			path = "BusinessLogic ";
+			sourceTree = "<group>";
+		};
 		BE21CCE42195F846005BF200 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
 				BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */,
 				BEE05DA02196A8FD002D2BC4 /* RestaurantViewModel.swift */,
-				BEE05DD021981E3F002D2BC4 /* RestaurantSort.swift */,
-				BE06338A21A906420002A5D3 /* RestaurantFilterType.swift */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -364,6 +371,7 @@
 		BECF10CA21946FEB008310C4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BE06339121AA7D970002A5D3 /* BusinessLogic  */,
 				BEE05DB62196C752002D2BC4 /* Errors */,
 				BEE05DAD2196B8C0002D2BC4 /* DataTransferObjects */,
 				BEE05DAA2196B82D002D2BC4 /* ResponseModels */,
@@ -597,7 +605,7 @@
 				BE2E2EF82198929400EF79F7 /* CoreDataFavouriteRestaurantDataStore.swift in Sources */,
 				BE06338B21A906420002A5D3 /* RestaurantFilterType.swift in Sources */,
 				BEA872A4219958EC002F7707 /* MessageWireframe.swift in Sources */,
-				BEE05DD121981E3F002D2BC4 /* RestaurantSort.swift in Sources */,
+				BEE05DD121981E3F002D2BC4 /* RestaurantFilter.swift in Sources */,
 				BEE05DC621971023002D2BC4 /* UITableView+Extensions.swift in Sources */,
 				BEE05DBC219701DD002D2BC4 /* AppStyle.swift in Sources */,
 				BEE05DC021970E3F002D2BC4 /* RestaurantTableViewCell.swift in Sources */,
