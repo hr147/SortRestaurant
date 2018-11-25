@@ -47,7 +47,7 @@ class RestaurantTableViewController: UITableViewController {
     }
     
     private func deActiveSearch() {
-        navigationItem.searchController?.isActive = false
+        navigationItem.searchController?.searchBar.resignFirstResponder()
     }
     
     private func showFilter(withFilters filters:[String],selectedIndex:Int) {
@@ -57,7 +57,9 @@ class RestaurantTableViewController: UITableViewController {
             .subscribe = {[weak self] value in
                 self?.restaurantViewModel.filterDidSelect(atIndex: value.index)
         }
-        present(filterController, animated: true, completion: nil)
+        
+        let source = presentedViewController ?? self
+        source.present(filterController, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -90,5 +92,9 @@ class RestaurantTableViewController: UITableViewController {
 extension RestaurantTableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         restaurantViewModel.restaurantDidSearch(withName: searchBar.text ?? "")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        restaurantViewModel.restaurantDidSearch(withName: "")
     }
 }

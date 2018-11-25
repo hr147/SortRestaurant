@@ -85,20 +85,19 @@ final class RestaurantViewModel {
             switch result {
             case .success:self.processRestaurants(withRestaurants: self.restaurants)
             case .failure(let error):
-                print("\(error)")
                 self.messageWireFrame.show(withMessage: error.localizedDescription)
             }
         }
     }
     
-    private func favourite(restuarant: Restaurant) {
-        restaurantFavouriteDataStore.favourite(name: restuarant.name) {[unowned self] result in
+    private func favourite(name: String) {
+        restaurantFavouriteDataStore.favourite(name: name) {[unowned self] result in
             self.processFavouriteResult(result: result)
         }
     }
     
-    private func unFavourite(restuarant: Restaurant) {
-        restaurantFavouriteDataStore.unfavourite(name: restuarant.name) {[unowned self] result in
+    private func unFavourite(name: String) {
+        restaurantFavouriteDataStore.unfavourite(name: name) {[unowned self] result in
             self.processFavouriteResult(result: result)
         }
     }
@@ -109,9 +108,9 @@ extension RestaurantViewModel: RestaurantViewModeling {
         let restaurant = self[index]
         
         if restaurant.isFavourite {
-            unFavourite(restuarant: restaurant)
+            unFavourite(name: restaurant.name)
         }else{
-            favourite(restuarant: restaurant)
+            favourite(name: restaurant.name)
         }
     }
     
