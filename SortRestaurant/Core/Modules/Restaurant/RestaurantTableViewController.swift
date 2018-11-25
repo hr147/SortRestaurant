@@ -9,7 +9,6 @@
 import UIKit
 
 class RestaurantTableViewController: UITableViewController {
-    
     var restaurantViewModel:RestaurantViewModeling!
     weak var dependency: DependencyContainer?
     
@@ -41,14 +40,14 @@ class RestaurantTableViewController: UITableViewController {
                 self?.tableView.reloadData()
         }
         
-        restaurantViewModel.filters
+        restaurantViewModel.filterNames
             .subscribe = {[weak self] filterTuple in
                 self?.showFilter(withFilters: filterTuple.names, selectedIndex: filterTuple.selectedIndex)
         }
     }
     
     private func deActiveSearch() {
-        navigationItem.searchController?.isActive = false
+        navigationItem.searchController?.searchBar.resignFirstResponder()
     }
     
     private func showFilter(withFilters filters:[String],selectedIndex:Int) {
@@ -58,7 +57,9 @@ class RestaurantTableViewController: UITableViewController {
             .subscribe = {[weak self] value in
                 self?.restaurantViewModel.filterDidSelect(atIndex: value.index)
         }
-        present(filterController, animated: true, completion: nil)
+        
+        let source = presentedViewController ?? self
+        source.present(filterController, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -86,12 +87,14 @@ class RestaurantTableViewController: UITableViewController {
         deActiveSearch()
         restaurantViewModel.filterDidTouch()
     }
-    
 }
 
 extension RestaurantTableViewController: UISearchBarDelegate {
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         restaurantViewModel.restaurantDidSearch(withName: searchBar.text ?? "")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        restaurantViewModel.restaurantDidSearch(withName: "")
     }
 }

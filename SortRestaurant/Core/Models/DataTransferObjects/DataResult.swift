@@ -6,8 +6,6 @@
 //  Copyright © 2018 Haroon Ur Rasheed. All rights reserved.
 //
 
-import UIKit
-
 typealias ResultHandler<T,E:Error> = ((DataResult<T,E>)->Void)
 
 public enum DataResult<T,E:Error> {

@@ -7,7 +7,6 @@
 //
 
 class Restaurant: Decodable {
-    
     enum Status:String,Decodable {
         case open = "open"
         case close = "closed"

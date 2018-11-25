@@ -12,12 +12,9 @@ protocol Router {
     func installRoot()
 }
 
-class AppRouter: Router {
-    
+final class AppRouter: Router {
     private unowned let dependency:DependencyContainer
-    
     var window:UIWindow?
-    
     
     init(dependency:DependencyContainer) {
         self.dependency = dependency

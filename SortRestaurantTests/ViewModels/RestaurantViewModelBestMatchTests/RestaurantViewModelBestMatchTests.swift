@@ -10,36 +10,20 @@ import XCTest
 @testable import SortRestaurant
 
 class RestaurantViewModelBestMatchTests: XCTestCase {
+
+    typealias FilterHandler = (Restaurant,Restaurant) -> Bool
     
-    let defaultSort = RestaurantSort("Best Match",BestMatchSort())
-    var sorts:[RestaurantSort]!
-    var testBundle:Bundle!
-    let favouriteDataStore = StubFavouriteRestaurantDataStore()
-    let wireFrame = StubMessageWireframe()
+    var viewModelFactory: MockRestaurantViewModel!
+    var filter: FilterHandler!
     
     override func setUp() {
-        testBundle = Bundle(for: type(of: self))
-        sorts = [defaultSort]
+        viewModelFactory = MockRestaurantViewModel(filterType: .bestMatch)
+        filter = { $0.sort.bestMatch >= $1.sort.bestMatch }
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testBestMatch_GroupedByOpenOrderCloseAndSorted() {
+    
+    func testGroupedByOpenOrderCloseAndSorted() {
         
-       let dataStore = StubRestaurantDataStore(
-            bundle:testBundle,
-            fileName:"BestMatchSample1",
-            translate:JSONTranslation())
-        
-        
-        let viewModel = RestaurantViewModel(
-            restaurantDataStore: dataStore,
-            restaurantFavouriteDataStore: favouriteDataStore,
-            messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+        let viewModel = viewModelFactory.viewModel(file: .sample1)
         
         // 1. Define an expectation
         
@@ -53,7 +37,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
         viewModel.viewDidLoad()
         
         // 3. Wait for the expectation to be fulfilled
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1) {[unowned self] error in
             
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -61,33 +45,22 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
             
             XCTAssertTrue(viewModel[0].status == .open)
             XCTAssertTrue(viewModel[1].status == .open)
-            XCTAssertTrue(viewModel[0].sort.bestMatch >= viewModel[1].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[0], viewModel[1]))
             
             XCTAssertTrue(viewModel[2].status == .order)
             XCTAssertTrue(viewModel[3].status == .order)
-            XCTAssertTrue(viewModel[2].sort.bestMatch >= viewModel[3].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[2], viewModel[3]))
             
             XCTAssertTrue(viewModel[4].status == .close)
             XCTAssertTrue(viewModel[5].status == .close)
-            XCTAssertTrue(viewModel[4].sort.bestMatch >= viewModel[5].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[4], viewModel[5]))
             
         }
     }
     
-    func testBestMatch_GroupedByOrderCloseAndSorted() {
+    func testGroupedByOrderCloseAndSorted() {
         
-        let dataStore = StubRestaurantDataStore(
-            bundle:testBundle,
-            fileName:"BestMatchSample2",
-            translate:JSONTranslation())
-        
-        
-        let viewModel = RestaurantViewModel(
-            restaurantDataStore: dataStore,
-            restaurantFavouriteDataStore: favouriteDataStore,
-            messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+        let viewModel = viewModelFactory.viewModel(file: .sample2)
         
         // 1. Define an expectation
         
@@ -103,7 +76,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
         
         
         // 3. Wait for the expectation to be fulfilled
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1) {[unowned self] error in
             
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -111,29 +84,18 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
             
             XCTAssertTrue(viewModel[0].status == .order)
             XCTAssertTrue(viewModel[1].status == .order)
-            XCTAssertTrue(viewModel[0].sort.bestMatch >= viewModel[1].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[0], viewModel[1]))
             
             XCTAssertTrue(viewModel[2].status == .close)
             XCTAssertTrue(viewModel[3].status == .close)
-            XCTAssertTrue(viewModel[2].sort.bestMatch >= viewModel[3].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[2], viewModel[3]))
             
         }
     }
     
-    func testBestMatch_GroupedByOpenCloseAndSorted() {
+    func testGroupedByOpenCloseAndSorted() {
         
-        let dataStore = StubRestaurantDataStore(
-            bundle:testBundle,
-            fileName:"BestMatchSample3",
-            translate:JSONTranslation())
-        
-        
-        let viewModel = RestaurantViewModel(
-            restaurantDataStore: dataStore,
-            restaurantFavouriteDataStore: favouriteDataStore,
-            messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+        let viewModel = viewModelFactory.viewModel(file: .sample3)
         
         // 1. Define an expectation
         
@@ -149,7 +111,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
         
         
         // 3. Wait for the expectation to be fulfilled
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1) {[unowned self] error in
             
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -157,29 +119,18 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
             
             XCTAssertTrue(viewModel[0].status == .open)
             XCTAssertTrue(viewModel[1].status == .open)
-            XCTAssertTrue(viewModel[0].sort.bestMatch >= viewModel[1].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[0], viewModel[1]))
             
             XCTAssertTrue(viewModel[2].status == .close)
             XCTAssertTrue(viewModel[3].status == .close)
-            XCTAssertTrue(viewModel[2].sort.bestMatch >= viewModel[3].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[2], viewModel[3]))
             
         }
     }
     
-    func testBestMatch_GroupedByOpenOrderAndSorted() {
+    func testGroupedByOpenOrderAndSorted() {
         
-        let dataStore = StubRestaurantDataStore(
-            bundle:testBundle,
-            fileName:"BestMatchSample4",
-            translate:JSONTranslation())
-        
-        
-        let viewModel = RestaurantViewModel(
-            restaurantDataStore: dataStore,
-            restaurantFavouriteDataStore: favouriteDataStore,
-            messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+        let viewModel = viewModelFactory.viewModel(file: .sample4)
         
         // 1. Define an expectation
         
@@ -195,7 +146,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
         
         
         // 3. Wait for the expectation to be fulfilled
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1) {[unowned self] error in
             
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -203,29 +154,18 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
             
             XCTAssertTrue(viewModel[0].status == .open)
             XCTAssertTrue(viewModel[1].status == .open)
-            XCTAssertTrue(viewModel[0].sort.bestMatch >= viewModel[1].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[0], viewModel[1]))
             
             XCTAssertTrue(viewModel[2].status == .order)
             XCTAssertTrue(viewModel[3].status == .order)
-            XCTAssertTrue(viewModel[2].sort.bestMatch >= viewModel[3].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[2], viewModel[3]))
             
         }
     }
     
-    func testBestMatch_GroupedByFavouritesAndOpenOrderCloseAndSorted() {
+    func testGroupedByFavouritesAndOpenOrderCloseAndSorted() {
         
-        let dataStore = StubRestaurantDataStore(
-            bundle:testBundle,
-            fileName:"BestMatchSample1",
-            translate:JSONTranslation())
-        
-        
-        let viewModel = RestaurantViewModel(
-            restaurantDataStore: dataStore,
-            restaurantFavouriteDataStore: StubBestMatchFavouriteRestaurantDataStore(),
-            messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+        let viewModel = viewModelFactory.viewModel(file: .sample1, favourite: .favourite)
         
         // 1. Define an expectation
         
@@ -239,7 +179,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
         viewModel.viewDidLoad()
         
         // 3. Wait for the expectation to be fulfilled
-        waitForExpectations(timeout: 1) { error in
+        waitForExpectations(timeout: 1) {[unowned self] error in
             
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -250,7 +190,7 @@ class RestaurantViewModelBestMatchTests: XCTestCase {
             
             XCTAssertTrue(viewModel[2].status == .open && viewModel[2].isFavourite == false)
             XCTAssertTrue(viewModel[3].status == .open && viewModel[3].isFavourite == false)
-            XCTAssertTrue(viewModel[2].sort.bestMatch >= viewModel[3].sort.bestMatch)
+            XCTAssertTrue(self.filter(viewModel[2], viewModel[3]))
             
             XCTAssertTrue(viewModel[4].status == .order && viewModel[4].isFavourite == false)
             XCTAssertTrue(viewModel[5].status == .close && viewModel[5].isFavourite == false)

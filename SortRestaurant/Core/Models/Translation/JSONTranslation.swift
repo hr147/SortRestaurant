@@ -13,7 +13,6 @@ protocol ObjectTranslatable {
 }
 
 struct JSONTranslation: ObjectTranslatable {
-    
     func translateToObject<T>(withData data: Data) throws -> T where T : Decodable {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)

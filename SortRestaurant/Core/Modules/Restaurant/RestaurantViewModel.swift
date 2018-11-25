@@ -9,7 +9,7 @@
 import Foundation
 
 protocol RestaurantViewModeling: class {
-    //Inputs
+    /// ViewModel Input messages
     var count: Int { get }
     subscript (index:Int)-> Restaurant { get }
     func viewDidLoad()
@@ -17,32 +17,47 @@ protocol RestaurantViewModeling: class {
     func filterDidTouch()
     func filterDidSelect(atIndex index:Int)
     func favouriteStatusDidChange(atIndex index:Int)
-    //outputs
+    
+    /// ViewModel Output Obserables
     var refresh: Detectable<Void> { get }
-    var filters: Detectable<(names:[String],selectedIndex:Int)> { get }
+    var filterNames: Detectable<(names:[String],selectedIndex:Int)> { get }
 }
 
-class RestaurantViewModel {
+final class RestaurantViewModel {
+    /// Properties for to get restuarants
     private let restaurantDataStore:RestaurantDataStore
     private let restaurantFavouriteDataStore:FavouriteRestaurantDataStore
+    
+    /// to get filtered and sorted restuarants
+    private let restaurantFilter:RestaurantFilterable
+    
     private var restaurants:[Restaurant] = []
-    private let restaurantSorts:[RestaurantSort]
-    private var currentSort:RestaurantSort
+    
+    /// use for show alert messages
     private let messageWireFrame:MessageWireframe
     
+    /// ViewModel Output obserables
     let refresh: Detectable<Void> = Detectable(value: ())
-    let filters: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
+    let filterNames: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
     
+    
+    /// initialize viewmodel
+    ///
+    /// - Parameters:
+    ///   - restaurantDataStore: privide list of restaurants
+    ///   - restaurantFavouriteDataStore: privide list of stored favourite restaurants
+    ///   - messageWireFrame: show pop up messages
+    ///   - currentFilter: default filter
+    ///   - filters: list of all filters
     init(restaurantDataStore:RestaurantDataStore,
          restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
          messageWireFrame:MessageWireframe,
-         currentSort:RestaurantSort,
-         restaurantSorts:[RestaurantSort]) {
+         restaurantFilter:RestaurantFilterable
+         ) {
         self.restaurantDataStore = restaurantDataStore
-        self.currentSort = currentSort
-        self.restaurantSorts = restaurantSorts
         self.restaurantFavouriteDataStore = restaurantFavouriteDataStore
         self.messageWireFrame = messageWireFrame
+        self.restaurantFilter = restaurantFilter
     }
     
     private func fetchRestaurants(withRestaurantName name:String)  {
@@ -58,47 +73,44 @@ class RestaurantViewModel {
             if case let .success(storedFavourites) = result {
                 favourites = storedFavourites
             }
-            self.restaurants = self.currentSort.sorted(withFavourites: favourites, withRestaurants: restaurants)
+            // load sorted restaurants based on active filter
+            self.restaurants = self.restaurantFilter.sorted(favourites, restaurants)
+            
             self.refresh.value = ()
         }
     }
     
-    private func favourite(restuarant: Restaurant) {
-        restaurantFavouriteDataStore.favourite(name: restuarant.name) {[unowned self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:self.processRestaurants(withRestaurants: self.restaurants)
-                case .failure(let error):
-                    print("\(error)")
-                    self.messageWireFrame.show(withMessage: "favourite failed. Please try again.")
-                }
+    private func processFavouriteResult(result:DataResult<Bool, RestaurantError>) {
+        DispatchQueue.main.async {[unowned self] in
+            switch result {
+            case .success:self.processRestaurants(withRestaurants: self.restaurants)
+            case .failure(let error):
+                self.messageWireFrame.show(withMessage: error.localizedDescription)
             }
         }
     }
     
-    private func unFavourite(restuarant: Restaurant) {
-        restaurantFavouriteDataStore.unfavourite(name: restuarant.name) {[unowned self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:self.processRestaurants(withRestaurants: self.restaurants)
-                case .failure(let error):
-                    print("\(error)")
-                    self.messageWireFrame.show(withMessage: "un favourite failed. Please try again.")
-                }
-            }
+    private func favourite(name: String) {
+        restaurantFavouriteDataStore.favourite(name: name) {[unowned self] result in
+            self.processFavouriteResult(result: result)
+        }
+    }
+    
+    private func unFavourite(name: String) {
+        restaurantFavouriteDataStore.unfavourite(name: name) {[unowned self] result in
+            self.processFavouriteResult(result: result)
         }
     }
 }
 
 extension RestaurantViewModel: RestaurantViewModeling {
-    
     func favouriteStatusDidChange(atIndex index: Int) {
         let restaurant = self[index]
         
         if restaurant.isFavourite {
-            unFavourite(restuarant: restaurant)
+            unFavourite(name: restaurant.name)
         }else{
-            favourite(restuarant: restaurant)
+            favourite(name: restaurant.name)
         }
     }
     
@@ -107,14 +119,12 @@ extension RestaurantViewModel: RestaurantViewModeling {
     }
     
     func filterDidSelect(atIndex index: Int) {
-        currentSort = restaurantSorts[index]
+        restaurantFilter.activate(for: index)
         processRestaurants(withRestaurants: restaurants)
     }
     
     func filterDidTouch() {
-        let filterNames = restaurantSorts.map({ $0.title })
-        let filterSelectedRowIndex = restaurantSorts.firstIndex(where: { $0.title == currentSort.title }) ?? 0
-        filters.value = (filterNames,filterSelectedRowIndex)
+        filterNames.value = (restaurantFilter.names,restaurantFilter.indexOfActiveFilter)
     }
     
     func viewDidLoad() {
