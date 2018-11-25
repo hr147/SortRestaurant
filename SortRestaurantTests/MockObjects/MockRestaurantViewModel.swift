@@ -57,7 +57,7 @@ enum FilterType: String {
         return rawValue
     }
     
-    var filter: RestaurantFiltering {
+    var filter: RestaurantFilterType {
         switch self {
         case .bestMatch: return BestMatchFilter(title: title)
         case .newest: return NewestFilter(title: title)
@@ -94,7 +94,7 @@ class MockRestaurantViewModel {
     
     func viewModel(file: JSONFileName = .sample1, favourite: FavouriteStub = .empty) -> RestaurantViewModeling {
         let defaultFilter = filterType.filter
-        let filters:[RestaurantFiltering] = [defaultFilter]
+        let filters:[RestaurantFilterType] = [defaultFilter]
         let testBundle:Bundle = Bundle(for: type(of: self))
         let favouriteDataStore = favourite.favouriteDataSource
         let wireFrame = StubMessageWireframe()

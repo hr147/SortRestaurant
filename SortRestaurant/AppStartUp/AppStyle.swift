@@ -13,7 +13,6 @@ protocol AppStyling {
 }
 
 struct AppStyle {
-    
     private func configureNavigationBar() {
         let navigationBar = UINavigationBar.appearance()
         navigationBar.tintColor = .white
@@ -27,7 +26,6 @@ struct AppStyle {
 }
 
 extension AppStyle: AppStyling{
-    
     func applyTheme() {
         configureNavigationBar()
         configureSearchBar()

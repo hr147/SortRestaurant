@@ -6,17 +6,16 @@
 //  Copyright © 2018 Haroon Ur Rasheed. All rights reserved.
 //
 struct RestaurantSort {
-    
     func sorted(withFavourites favouirtes:[String],
                 withRestaurants restaurants:[Restaurant],
-                withFilter filter:RestaurantFiltering
+                withFilter filter:RestaurantFilterType
         ) -> [Restaurant] {
         
         if restaurants.isEmpty { return [] }
         
         restaurants.forEach {
             $0.currentSortTitle = filter.title
-            $0.currentSortValue = filter.value(from: $0)
+            $0.currentSortValue = filter[$0]
             $0.isFavourite = false
         }
         

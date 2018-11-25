@@ -9,12 +9,13 @@
 import UIKit
 
 final class RestaurantFilterController: UIViewController {
-    
     @IBOutlet weak var pickerView: UIPickerView!
     var filterDataSource: [String]!
     let valueDidSelect: Detectable<(value:String,index:Int)> = .init(value: ("",0))
     var defaultSelectedRow:Int = 0
     let defaultComponenet:Int = 0
+    
+    //MARK:- Controller Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,6 +29,7 @@ final class RestaurantFilterController: UIViewController {
     }
     
     //MARK:- Actions
+    
     @IBAction func cancelTouchedUp(_ sender: UIBarButtonItem) {
         close()
     }
@@ -42,7 +44,6 @@ final class RestaurantFilterController: UIViewController {
 }
 
 extension RestaurantFilterController: UIPickerViewDataSource {
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -53,7 +54,6 @@ extension RestaurantFilterController: UIPickerViewDataSource {
 }
 
 extension RestaurantFilterController: UIPickerViewDelegate {
-    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return filterDataSource[row]
     }

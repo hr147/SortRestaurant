@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE06338B21A906420002A5D3 /* RestaurantFiltering.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE06338A21A906420002A5D3 /* RestaurantFiltering.swift */; };
+		BE06338B21A906420002A5D3 /* RestaurantFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE06338A21A906420002A5D3 /* RestaurantFilterType.swift */; };
 		BE06338E21A9659A0002A5D3 /* MockRestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE06338D21A9659A0002A5D3 /* MockRestaurantViewModel.swift */; };
 		BE21CCE32195F770005BF200 /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21CCE22195F770005BF200 /* UIStoryboard+Extensions.swift */; };
 		BE21CCE62195F8AC005BF200 /* RestaurantTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */; };
@@ -74,7 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BE06338A21A906420002A5D3 /* RestaurantFiltering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFiltering.swift; sourceTree = "<group>"; };
+		BE06338A21A906420002A5D3 /* RestaurantFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantFilterType.swift; sourceTree = "<group>"; };
 		BE06338D21A9659A0002A5D3 /* MockRestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRestaurantViewModel.swift; sourceTree = "<group>"; };
 		BE21CCE22195F770005BF200 /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
 		BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantTableViewController.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				BE21CCE52195F8AC005BF200 /* RestaurantTableViewController.swift */,
 				BEE05DA02196A8FD002D2BC4 /* RestaurantViewModel.swift */,
 				BEE05DD021981E3F002D2BC4 /* RestaurantSort.swift */,
-				BE06338A21A906420002A5D3 /* RestaurantFiltering.swift */,
+				BE06338A21A906420002A5D3 /* RestaurantFilterType.swift */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -595,7 +595,7 @@
 				BE2D6ECD219577A300ADECB7 /* AppDependency.swift in Sources */,
 				BEE05DCA21973EE3002D2BC4 /* RestaurantFilterController.swift in Sources */,
 				BE2E2EF82198929400EF79F7 /* CoreDataFavouriteRestaurantDataStore.swift in Sources */,
-				BE06338B21A906420002A5D3 /* RestaurantFiltering.swift in Sources */,
+				BE06338B21A906420002A5D3 /* RestaurantFilterType.swift in Sources */,
 				BEA872A4219958EC002F7707 /* MessageWireframe.swift in Sources */,
 				BEE05DD121981E3F002D2BC4 /* RestaurantSort.swift in Sources */,
 				BEE05DC621971023002D2BC4 /* UITableView+Extensions.swift in Sources */,

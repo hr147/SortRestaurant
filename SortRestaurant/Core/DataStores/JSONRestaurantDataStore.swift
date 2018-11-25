@@ -30,7 +30,6 @@ struct JSONRestaurantDataStore {
 }
 
 extension JSONRestaurantDataStore: RestaurantDataStore {
-    
     func restaurants(withName name:String, completion:ResultHandler<[Restaurant],RestaurantError>) {
         if name.isEmpty {
             completion(.success(resturants))

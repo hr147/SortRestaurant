@@ -30,7 +30,7 @@ class AppDependency: DependencyContainer {
         let controller:RestaurantTableViewController = storyboard.instantiateViewController()
         let defaultFilter = BestMatchFilter(title: "Best Match")
         
-        let filters:[RestaurantFiltering] = [
+        let filters:[RestaurantFilterType] = [
             defaultFilter,
             NewestFilter(title: "Newest"),
             RatingAverageFilter(title: "Rating Average"),

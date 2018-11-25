@@ -18,19 +18,15 @@ final class CoreDataFavouriteRestaurantDataStore {
 }
 
 extension CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
-    
     func favourite(name: String, completion: @escaping ResultHandler<Bool,RestaurantError>) {
         persistence.performBackgroundTask { (context) in
             let restaurantMO = RestaurantMO(context: context)
             restaurantMO.name = name
             do {
-                print(context.hasChanges)
                 try context.save()
                 completion(.success(true))
-                print("saved changes")
             } catch {
                 completion(.failure(.favouriteDataStoreFailed(reason: .favouriteFailed(error: error))))
-                print("exception saving in background thread")
             }
         }
     }
@@ -50,14 +46,11 @@ extension CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
                     
                 }catch{
                     completion(.failure(.favouriteDataStoreFailed(reason: .unFavouriteSaveFailed(error: error))))
-                    print("exception saving in background thread")
                 }
                 
                 completion(.success(true))
-                print("saved changes")
             } catch {
                 completion(.failure(.favouriteDataStoreFailed(reason: .unFavouriteFailed(error: error))))
-                print("exception fetching in background thread")
             }
         }
     }
@@ -70,10 +63,8 @@ extension CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
                 restaurantFR.returnsObjectsAsFaults = false
                 let res = try context.fetch(restaurantFR)
                 completion(.success(res.compactMap({ $0.name })))
-                print(res)
             } catch  {
                 completion(.failure(.favouriteDataStoreFailed(reason: .favouriteFetchingFailed(error: error))))
-                print("oops, could not fetch data in main thread")
             }
         }
     }

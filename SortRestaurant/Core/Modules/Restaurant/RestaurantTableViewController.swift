@@ -9,7 +9,6 @@
 import UIKit
 
 class RestaurantTableViewController: UITableViewController {
-    
     var restaurantViewModel:RestaurantViewModeling!
     weak var dependency: DependencyContainer?
     
@@ -86,11 +85,9 @@ class RestaurantTableViewController: UITableViewController {
         deActiveSearch()
         restaurantViewModel.filterDidTouch()
     }
-    
 }
 
 extension RestaurantTableViewController: UISearchBarDelegate {
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         restaurantViewModel.restaurantDidSearch(withName: searchBar.text ?? "")
     }

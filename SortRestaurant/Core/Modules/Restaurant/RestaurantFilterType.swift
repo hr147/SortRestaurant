@@ -6,83 +6,83 @@
 //  Copyright © 2018 Haroon Ur Rasheed. All rights reserved.
 //
 
-
-
-protocol RestaurantFiltering {
+protocol RestaurantFilterType {
     typealias filterHandler = (Restaurant,Restaurant) -> Bool
+    
     var title: String { get set }
     var sortedBy:filterHandler { get }
-    func value(from restaurant:Restaurant) -> String
+    
+    subscript (restaurant: Restaurant) -> String { get }
 }
 
-struct BestMatchFilter: RestaurantFiltering {
+struct BestMatchFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.bestMatch > $1.sort.bestMatch }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.bestMatch)"
     }
 }
 
-struct NewestFilter: RestaurantFiltering {
+struct NewestFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.newest > $1.sort.newest }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.newest)"
     }
 }
 
-struct RatingAverageFilter: RestaurantFiltering {
+struct RatingAverageFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.ratingAverage > $1.sort.ratingAverage }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.ratingAverage)"
     }
 }
 
-struct DistanceFilter: RestaurantFiltering {
+struct DistanceFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.distance > $1.sort.distance }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.distance)"
     }
 }
 
-struct PopularityFilter: RestaurantFiltering {
+struct PopularityFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.popularity > $1.sort.popularity }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.popularity)"
     }
 }
 
-struct AverageProductPriceFilter: RestaurantFiltering {
+struct AverageProductPriceFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.averageProductPrice > $1.sort.averageProductPrice }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.averageProductPrice)"
     }
 }
 
-struct DeliveryCostsFilter: RestaurantFiltering {
+struct DeliveryCostsFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.deliveryCosts > $1.sort.deliveryCosts }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.deliveryCosts)"
     }
 }
 
-struct MinCostFilter: RestaurantFiltering {
+struct MinCostFilter: RestaurantFilterType {
     var title: String
     let sortedBy: filterHandler = { $0.sort.minCost < $1.sort.minCost }
     
-    func value(from restaurant: Restaurant) -> String {
+    subscript (restaurant: Restaurant) -> String {
         return "\(restaurant.sort.minCost)"
     }
 }

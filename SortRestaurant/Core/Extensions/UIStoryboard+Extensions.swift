@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIStoryboard {
-
     enum Storyboard: String {
         case restaurant
         case filter
