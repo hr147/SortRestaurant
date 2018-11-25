@@ -41,7 +41,7 @@ class RestaurantTableViewController: UITableViewController {
                 self?.tableView.reloadData()
         }
         
-        restaurantViewModel.filters
+        restaurantViewModel.filterNames
             .subscribe = {[weak self] filterTuple in
                 self?.showFilter(withFilters: filterTuple.names, selectedIndex: filterTuple.selectedIndex)
         }

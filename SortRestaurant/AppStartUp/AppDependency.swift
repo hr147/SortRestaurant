@@ -25,20 +25,20 @@ class AppDependency: DependencyContainer {
     }
     
     var resturantController: RestaurantTableViewController {
-        
+    
         let storyboard:UIStoryboard = .init(storyboard: .restaurant)
         let controller:RestaurantTableViewController = storyboard.instantiateViewController()
-        let defaultSort = RestaurantSort("Best Match",BestMatchSort())
+        let defaultFilter = BestMatchFilter(title: "Best Match")
         
-        let sorts = [
-            defaultSort,
-            RestaurantSort("Newest",NewestSort()),
-            RestaurantSort("Rating Average",RatingAverageSort()),
-            RestaurantSort("Distance",DistanceSort()),
-            RestaurantSort("Popularity",PopularitySort()),
-            RestaurantSort("Average Product Price",AverageProductPriceSort()),
-            RestaurantSort("Delivery Costs",DeliveryCostsSort()),
-            RestaurantSort("Min Cost",MinCostSort())
+        let filters:[RestaurantFiltering] = [
+            defaultFilter,
+            NewestFilter(title: "Newest"),
+            RatingAverageFilter(title: "Rating Average"),
+            DistanceFilter(title: "Distance"),
+            PopularityFilter(title: "Popularity"),
+            AverageProductPriceFilter(title: "Average Product Price"),
+            DeliveryCostsFilter(title: "Delivery Costs"),
+            MinCostFilter(title: "Min Cost")
         ]
         
         let dataStore = JSONRestaurantDataStore(fileName: "sample iOS", translate: JSONTranslation())
@@ -49,8 +49,8 @@ class AppDependency: DependencyContainer {
             restaurantDataStore: dataStore,
             restaurantFavouriteDataStore: favouriteDataStore,
             messageWireFrame: wireFrame,
-            currentSort: defaultSort,
-            restaurantSorts: sorts)
+            currentFilter: defaultFilter,
+            filters: filters)
         
         controller.restaurantViewModel = viewModel
         controller.dependency = self

@@ -9,16 +9,17 @@
 
 import CoreData
 
-class CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
-    
+final class CoreDataFavouriteRestaurantDataStore {
     let persistence:CoreDataPersistence
     
     init(persistence:CoreDataPersistence = CoreDataPersistence()) {
         self.persistence = persistence
     }
+}
+
+extension CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
     
     func favourite(name: String, completion: @escaping ResultHandler<Bool,RestaurantError>) {
-        
         persistence.performBackgroundTask { (context) in
             let restaurantMO = RestaurantMO(context: context)
             restaurantMO.name = name
@@ -35,7 +36,6 @@ class CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
     }
     
     func unfavourite(name: String, completion: @escaping ResultHandler<Bool,RestaurantError>) {
-        
         persistence.performBackgroundTask { (context) in
             let restaurantFR : NSFetchRequest<RestaurantMO> = RestaurantMO.fetchRequest()
             restaurantFR.predicate = NSPredicate(format: "name = %@", name)
@@ -77,6 +77,4 @@ class CoreDataFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
             }
         }
     }
-    
-    
 }

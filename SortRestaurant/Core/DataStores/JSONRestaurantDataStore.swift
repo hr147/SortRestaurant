@@ -8,8 +8,7 @@
 
 import UIKit
 
-struct JSONRestaurantDataStore: RestaurantDataStore {
-    
+struct JSONRestaurantDataStore {
     private var resturants:[Restaurant] = []
     
     init(fileName:String,translate:ObjectTranslatable) {
@@ -27,13 +26,12 @@ struct JSONRestaurantDataStore: RestaurantDataStore {
         } catch  {
             print(error)
         }
-        
-        
-        
     }
+}
+
+extension JSONRestaurantDataStore: RestaurantDataStore {
     
     func restaurants(withName name:String, completion:ResultHandler<[Restaurant],RestaurantError>) {
-        
         if name.isEmpty {
             completion(.success(resturants))
             return
@@ -45,6 +43,4 @@ struct JSONRestaurantDataStore: RestaurantDataStore {
         
         completion(.success(filteredResturants))
     }
-    
-    
 }

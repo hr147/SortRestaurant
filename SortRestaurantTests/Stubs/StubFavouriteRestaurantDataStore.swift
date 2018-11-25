@@ -23,7 +23,7 @@ struct StubFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
 }
 
 
-struct StubBestMatchFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
+struct StubFilledFavouriteRestaurantDataStore: FavouriteRestaurantDataStore {
     
     func favourite(name: String, completion: @escaping ResultHandler<Bool,RestaurantError>) {
         completion(.success(true))

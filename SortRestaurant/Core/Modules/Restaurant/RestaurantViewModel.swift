@@ -19,28 +19,41 @@ protocol RestaurantViewModeling: class {
     func favouriteStatusDidChange(atIndex index:Int)
     //outputs
     var refresh: Detectable<Void> { get }
-    var filters: Detectable<(names:[String],selectedIndex:Int)> { get }
+    var filterNames: Detectable<(names:[String],selectedIndex:Int)> { get }
 }
 
-class RestaurantViewModel {
+final class RestaurantViewModel {
     private let restaurantDataStore:RestaurantDataStore
     private let restaurantFavouriteDataStore:FavouriteRestaurantDataStore
+    private let restaurantSort = RestaurantSort()
+    
     private var restaurants:[Restaurant] = []
-    private let restaurantSorts:[RestaurantSort]
-    private var currentSort:RestaurantSort
+    private let filters:[RestaurantFiltering]
+    private var activeFilter:RestaurantFiltering
+    
     private let messageWireFrame:MessageWireframe
     
     let refresh: Detectable<Void> = Detectable(value: ())
-    let filters: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
+    let filterNames: Detectable<(names:[String],selectedIndex:Int)> = Detectable(value: ([],0))
+    
+    
+    /// MARK: Init
+    ///
+    /// - Parameters:
+    ///   - restaurantDataStore: privide list of restaurants
+    ///   - restaurantFavouriteDataStore: privide list of stored favourite restaurants
+    ///   - messageWireFrame: show pop up messages
+    ///   - currentFilter: default filter
+    ///   - filters: list of all filters
     
     init(restaurantDataStore:RestaurantDataStore,
          restaurantFavouriteDataStore:FavouriteRestaurantDataStore,
          messageWireFrame:MessageWireframe,
-         currentSort:RestaurantSort,
-         restaurantSorts:[RestaurantSort]) {
+         currentFilter:RestaurantFiltering,
+         filters:[RestaurantFiltering]) {
         self.restaurantDataStore = restaurantDataStore
-        self.currentSort = currentSort
-        self.restaurantSorts = restaurantSorts
+        self.activeFilter = currentFilter
+        self.filters = filters
         self.restaurantFavouriteDataStore = restaurantFavouriteDataStore
         self.messageWireFrame = messageWireFrame
     }
@@ -58,7 +71,12 @@ class RestaurantViewModel {
             if case let .success(storedFavourites) = result {
                 favourites = storedFavourites
             }
-            self.restaurants = self.currentSort.sorted(withFavourites: favourites, withRestaurants: restaurants)
+            // load sorted restaurants based on active filter
+            self.restaurants = self.restaurantSort.sorted(
+                withFavourites: favourites,
+                withRestaurants: restaurants,
+                withFilter: self.activeFilter)
+            
             self.refresh.value = ()
         }
     }
@@ -107,14 +125,14 @@ extension RestaurantViewModel: RestaurantViewModeling {
     }
     
     func filterDidSelect(atIndex index: Int) {
-        currentSort = restaurantSorts[index]
+        activeFilter = filters[index]
         processRestaurants(withRestaurants: restaurants)
     }
     
     func filterDidTouch() {
-        let filterNames = restaurantSorts.map({ $0.title })
-        let filterSelectedRowIndex = restaurantSorts.firstIndex(where: { $0.title == currentSort.title }) ?? 0
-        filters.value = (filterNames,filterSelectedRowIndex)
+        let names = filters.map({ $0.title })
+        let filterSelectedRowIndex = filters.firstIndex(where: { $0.title == activeFilter.title }) ?? 0
+        filterNames.value = (names,filterSelectedRowIndex)
     }
     
     func viewDidLoad() {

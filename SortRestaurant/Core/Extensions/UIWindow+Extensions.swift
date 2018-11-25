@@ -15,5 +15,4 @@ extension UIWindow {
         self.rootViewController = rootViewController
         self.makeKeyAndVisible()
     }
-
 }
